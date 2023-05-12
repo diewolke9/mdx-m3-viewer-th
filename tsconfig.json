@@ -16,7 +16,6 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "noImplicitReturns": true,
-    "noPropertyAccessFromIndexSignature": true,
     "suppressImplicitAnyIndexErrors": true
   },
   "exclude": ["clients", "clean.js", "webpack.config.js", "dist"]
