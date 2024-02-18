@@ -12,11 +12,11 @@ export class MappedDataRow {
       value = value.toString();
     }
 
-    this.map[key.toLowerCase()] = value;
+    this.map[key] = value;
   }
 
   string(key: string): string | undefined {
-    return this.map[key.toLowerCase()];
+    return this.map[key];
   }
 
   number(key: string): number {
@@ -81,7 +81,7 @@ export class MappedData {
                 key = `column${j}`;
               }
 
-              mapped.map[key.toLowerCase()] = row[j];
+              mapped.map[key] = row[j];
             }
           }
         }
@@ -101,7 +101,7 @@ export class MappedData {
         const mapped = map[row];
 
         for (const [name, property] of properties) {
-          mapped.map[name.toLowerCase()] = property;
+          mapped.map[name] = property;
         }
       }
     }
