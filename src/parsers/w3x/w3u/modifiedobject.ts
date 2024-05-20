@@ -10,6 +10,13 @@ export default class ModifiedObject {
   sets = 1;
   setsFlag: number[] = [];
   modifications: Modification[] = [];
+  modificationsPerSet: number[] = [];
+
+  // Handle adding modification to the last set for 1.33+
+  addModification(modification: Modification) {
+     this.modifications.push(modification)
+     this.modificationsPerSet[this.modificationsPerSet.length - 1]++
+  }
 
   load(
     stream: BinaryStream,
@@ -28,7 +35,10 @@ export default class ModifiedObject {
         this.setsFlag[set] = stream.readUint32();
       }
 
-      for (let i = 0, l = stream.readUint32(); i < l; i++) {
+      const modificationsCount = stream.readUint32();
+      this.modificationsPerSet.push(modificationsCount);
+
+      for (let i = 0, l = modificationsCount; i < l; i++) {
         const modification = new Modification();
 
         modification.load(stream, useOptionalInts);
@@ -59,12 +69,11 @@ export default class ModifiedObject {
       stream.writeUint32(this.sets);
     }
 
-    stream.writeUint32(this.modifications.length);
-
     for (let set = 0; set < this.sets; set++) {
       if (formatVersion >= 3) {
         stream.writeUint32(this.setsFlag[set]);
       }
+      stream.writeInt32(this.modificationsPerSet[set]);
       for (const modification of this.modifications) {
         modification.save(stream, useOptionalInts);
       }
