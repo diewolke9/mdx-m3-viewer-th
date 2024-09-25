@@ -28,7 +28,7 @@ export default class Modification {
     } else if (this.variableType === 3) {
       this.value = stream.readNull();
     } else {
-      throw new Error(`Modification: unknown variable type ${this.variableType}`);
+      throw new Error(`Modification: unknown variable type ${this.variableType} (mod id: ${this.id})`);
     }
 
     this.u1 = stream.readInt32();
