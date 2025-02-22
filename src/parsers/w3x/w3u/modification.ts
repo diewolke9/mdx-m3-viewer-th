@@ -27,6 +27,8 @@ export default class Modification {
       this.value = stream.readFloat32();
     } else if (this.variableType === 3) {
       this.value = stream.readNull();
+    } else if (this.variableType === 9) {
+      this.value = stream.readNull();
     } else {
       throw new Error(`Modification: unknown variable type ${this.variableType} (mod id: ${this.id})`);
     }
@@ -48,6 +50,8 @@ export default class Modification {
     } else if (this.variableType === 1 || this.variableType === 2) {
       stream.writeFloat32(<number>this.value);
     } else if (this.variableType === 3) {
+      stream.writeNull(<string>this.value);
+    } else if (this.variableType === 9) {
       stream.writeNull(<string>this.value);
     } else {
       throw new Error(`Modification: unknown variable type ${this.variableType}`);
